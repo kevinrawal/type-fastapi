@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "type-fastapi"
+version = "0.1.0"
+description = ""
+authors = ["KevinRawal <kevinrawal30@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+type-fastapi = "type_fastapi.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+typer = "^0.13.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
