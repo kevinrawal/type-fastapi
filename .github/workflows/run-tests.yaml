@@ -32,7 +32,7 @@ jobs:
 
       # Step 5: Run all test cases
       - name: Run Tests
-        run: poetry run pytest test/
+        run: poetry run pytest tests/
 
       # Optional: Generate a coverage report
       - name: Generate Coverage Report
