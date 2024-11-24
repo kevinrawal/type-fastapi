@@ -30,10 +30,7 @@ jobs:
           poetry config virtualenvs.create false
           poetry install
 
-      # Step 5: Run all test cases
-      - name: Run Tests
-        run: poetry run pytest tests/
-
-      # Optional: Generate a coverage report
-      - name: Generate Coverage Report
-        run: poetry run pytest --cov=test/
+      # Step 5: Run all test cases with coverage check
+      - name: Run Tests with Coverage Threshold
+        run: |
+          poetry run pytest --cov=tests/ --cov-fail-under=90
