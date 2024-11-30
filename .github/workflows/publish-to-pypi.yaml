@@ -31,7 +31,7 @@ jobs:
       run: |
         # Fetch the latest tags
         git fetch --tags
-        PREV_VERSION=$(git describe --tags --abbrev=0 || echo "0.0.0")
+        PREV_VERSION=$(git describe --tags --abbrev=0 main || echo "0.0.0")
         echo "Previous Version: $PREV_VERSION"
 
         # Get the current version from pyproject.toml
