@@ -49,12 +49,15 @@ jobs:
         fi
 
     - name: Build Package
+      if: steps.version_check.outputs.should_skip != 'true'
       run: poetry build
 
     - name: Publish to PyPI
+      if: steps.version_check.outputs.should_skip != 'true'
       env:
         PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
       run: |
+        set -e
         poetry config pypi-token.pypi $PYPI_TOKEN
         poetry publish
     
