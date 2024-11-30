@@ -20,4 +20,4 @@ type-fastapi <command>
 
 ## Useful links
 
-- [Github](https://github.com/typerelax/type-fastapi)
+- [Github](https://github.com/kevinrawal/type-fastapi)
