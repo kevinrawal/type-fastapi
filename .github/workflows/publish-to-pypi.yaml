@@ -25,12 +25,28 @@ jobs:
       run: |
         poetry config virtualenvs.create false
         poetry install
+    
+    - name: Check and Compare Versions
+      id: version_check
+      run: |
+        # Fetch the latest tags
+        git fetch --tags
+        PREV_VERSION=$(git describe --tags --abbrev=0 || echo "0.0.0")
+        echo "Previous Version: $PREV_VERSION"
 
-    # - name: Run Type Checks
-    #   run: poetry run mypy type-fastapi/
+        # Get the current version from pyproject.toml
+        CURRENT_VERSION=$(poetry version -s)
+        echo "Current Version: $CURRENT_VERSION"
 
-    # - name: Run Tests
-    #   run: poetry run pytest
+        # Compare the versions
+        if [ "$CURRENT_VERSION" = "$PREV_VERSION" ]; then
+          echo "Version has not changed. Skipping further steps."
+          echo "::set-output name=should_skip::true"
+          exit 0
+        else
+          echo "Version has changed. Proceeding with build and publish."
+          echo "::set-output name=should_skip::false"
+        fi
 
     - name: Build Package
       run: poetry build
@@ -41,3 +57,12 @@ jobs:
       run: |
         poetry config pypi-token.pypi $PYPI_TOKEN
         poetry publish
+    
+    - name: Create and Push Git Tag
+      if: steps.version_check.outputs.should_skip != 'true'
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        CURRENT_VERSION=$(poetry version -s)
+        git tag $CURRENT_VERSION
+        git push origin $CURRENT_VERSION
