@@ -30,6 +30,8 @@ jobs:
       id: version_check
       run: |
         # Fetch the latest tags
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/kevinrawal/type-fastapi.git
         git fetch --tags
         PREV_VERSION=$(git describe --tags --abbrev=0 || echo "0.0.0")
