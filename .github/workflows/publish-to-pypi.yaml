@@ -12,6 +12,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        tags: true
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -29,19 +32,13 @@ jobs:
     - name: Check and Compare Versions
       id: version_check
       run: |
-        # Fetch the latest tags
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/kevinrawal/type-fastapi.git
         git fetch --tags
-        PREV_VERSION=$(git describe --tags --abbrev=0 || echo "0.0.0")
+        PREV_VERSION=$(git tag --sort=-creatordate | head -n 1 || echo "0.0.0")
         echo "Previous Version: $PREV_VERSION"
 
-        # Get the current version from pyproject.toml
         CURRENT_VERSION=$(poetry version -s)
         echo "Current Version: $CURRENT_VERSION"
 
-        # Compare the versions
         if [ "$CURRENT_VERSION" = "$PREV_VERSION" ]; then
           echo "Version has not changed. Skipping further steps."
           echo "::set-output name=should_skip::true"
@@ -70,6 +67,7 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/kevinrawal/type-fastapi.git
+        git fetch --tags
         CURRENT_VERSION=$(poetry version -s)
-        git tag $CURRENT_VERSION
-        git push origin $CURRENT_VERSION
+        git tag -f $CURRENT_VERSION
+        git push origin --tags
