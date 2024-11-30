@@ -66,6 +66,7 @@ jobs:
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/kevinrawal/type-fastapi.git
         CURRENT_VERSION=$(poetry version -s)
         git tag $CURRENT_VERSION
         git push origin $CURRENT_VERSION
