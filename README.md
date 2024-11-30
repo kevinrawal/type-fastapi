@@ -16,3 +16,8 @@ type-fastapi <command>
 ## Commands
 
 - `standard` : Generate a standard FastAPI project.
+
+
+## Useful links
+
+- [Github](https://github.com/typerelax/type-fastapi)

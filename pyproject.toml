@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "type-fastapi"
-version = "0.1.3"
+version = "0.1.4"
 description = ""
 authors = ["KevinRawal <kevinrawal30@gmail.com>"]
 readme = "README.md"
