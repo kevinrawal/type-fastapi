@@ -5,3 +5,6 @@ build
 dist
 
 # Files
+
+# virtual environment
+venv
