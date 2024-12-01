@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "type-fastapi"
-version = "0.1.6"
+version = "0.1.7"
 description = ""
 authors = ["KevinRawal <kevinrawal30@gmail.com>"]
 readme = "README.md"
@@ -17,6 +17,8 @@ pytest = "^8.3.3"
 [tool.poetry.group.dev.dependencies]
 pytest-cov = "^6.0.0"
 black = "^24.10.0"
+pre-commit = "^4.0.1"
+flake8 = "^7.1.1"
 
 [build-system]
 requires = ["poetry-core"]
