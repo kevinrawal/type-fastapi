@@ -1,0 +1,38 @@
+name: Check Python Code Formatting and Lint
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**/*.py'
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Install dependencies
+        run: |
+          poetry config virtualenvs.create false
+          poetry install --with dev
+
+      - name: Install Pre-commit hooks
+        run: |
+          poetry run pre-commit install
+
+      - name: Run pre-commit checks
+        run: |
+          poetry run pre-commit run --all-files
+        continue-on-error: false
